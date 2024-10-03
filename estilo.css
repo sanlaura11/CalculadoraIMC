@@ -1,7 +1,7 @@
 
     body { 
         font-family: Arial, sans-serif; 
-        background: url('https://github.com/sanlaura11/CalculadoraIMC/blob/main/IMC.jpg') no-repeat center center fixed;
+        background: url('./IMC.jpg') no-repeat center center fixed;
         background-size: cover; 
         margin: 0;
         position: relative;
