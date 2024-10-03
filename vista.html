@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: url('../IMC.jpg') no-repeat center center fixed;
+            background-size: cover; 
+            margin: 0;
+            position: relative;
+            height: 100vh; /* Mantener altura completa de la vista */
+            overflow-y: auto; /* Habilitar desplazamiento vertical */
+        }
+        .container { 
+            background: rgba(255, 255, 255, 0.9); 
+            padding: 30px; 
+            border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+            max-width: 400px; 
+            width: 90%; /* Ancho responsive */
+            margin: 50px auto; /* Margen superior e inferior para espacio */
+            margin-bottom: 100px; /* Espacio adicional abajo */
+        }
+        h1 { 
+            text-align: center; 
+            margin-top: 0; /* Eliminar margen superior */
+        }
+        .info {
+            background-color: rgba(255, 255, 255, 0.9); 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin: 20px 0; /* Espacio entre el bloque de información y el formulario */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+        }
+        h2 {
+            color: black; 
+            text-align: center; 
+        }
+        p {
+            text-align: justify; 
+        }
+        label { display: block; margin-top: 10px; }
+        input[type="number"], select, button { 
+            width: 100%; 
+            padding: 10px; 
+            margin-top: 5px; 
+            border: 1px solid #ccc; 
+            border-radius: 3px; 
+        }
+        button { 
+            background: #28a745; 
+            color: #fff; 
+            border: none; 
+            cursor: pointer; 
+            margin-top: 15px;
+        }
+        button:hover { background: #218838; }
+        .result { 
+            margin-top: 20px; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 3px; 
+            background: #f9f9f9; 
+            display: none;
+        }
+        .encuesta-link {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #218838;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .encuesta-link:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de IMC</h1>
+        <div class="info">
+            <h2>¿Qué es el IMC?</h2>
+            <p>El Índice de Masa Corporal (IMC) es una medida que relaciona el peso y la altura de una persona para evaluar si se encuentra en un rango saludable. Se utiliza para detectar si una persona tiene un peso bajo, normal, sobrepeso u obesidad.</p>
+        </div>
+        <form id="imcForm">
+            <label for="peso">Peso (kg):</label>
+            <input type="number" id="peso" name="peso" required step="0.1" min="0">
+
+            <label for="altura">Altura (m):</label>
+            <input type="number" id="altura" name="altura" required step="0.01" min="0">
+
+            <label for="genero">Género:</label>
+            <select id="genero" name="genero" required>
+                <option value="">Selecciona tu género</option>
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
+            </select>
+            <label for="actividad">Nivel de actividad física:</label>
+            <select id="actividad" name="actividad" required>
+                <option value="">Selecciona tu nivel de actividad</option>
+                <option value="sedentario">Sedentario</option>
+                <option value="moderado">Moderado</option>
+                <option value="activo">Activo</option>
+            </select>
+
+            <button type="submit">Calcular IMC</button>
+        </form>
+        <div class="result" id="result">
+            <p>Tu IMC es: <strong id="imcValue"></strong></p>
+            <p>Estado: <strong id="imcStatus"></strong></p>
+            <p>Dieta recomendada: <strong id="imcDiet"></strong></p>
+        </div>
+
+        <div class="consejos">
+            <h3>Consejos para mejorar tu salud</h3>
+            <ul>
+                <li>Mantén una dieta equilibrada con frutas y verduras.</li>
+                <li>Realiza ejercicio al menos 30 minutos al día.</li>
+                <li>Bebe al menos 8 vasos de agua diariamente.</li>
+            </ul>
+        </div>
+    </div>
+
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeZWiag810kZPQbw9l2RKTCzsbOQTMDSxMoQsCLMafMUIlMlQ/viewform?usp=sf_link" target="_blank" class="encuesta-link">Encuesta de satisfacción</a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('imcForm');
+            const resultDiv = document.getElementById('result');
+            const imcValueSpan = document.getElementById('imcValue');
+            const imcStatusSpan = document.getElementById('imcStatus');
+            const imcDietSpan = document.getElementById('imcDiet');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const peso = parseFloat(document.getElementById('peso').value);
+                const altura = parseFloat(document.getElementById('altura').value);
+                const genero = document.getElementById('genero').value;
+
+                if (peso > 0 && altura > 0 && genero !== "") {
+                    const imc = peso / (altura * altura);
+                    const imcRounded = imc.toFixed(2);
+                    const category = getIMCCategory(imc);
+
+                    imcValueSpan.textContent = imcRounded;
+                    imcStatusSpan.textContent = `${category.status} (${genero})`;
+                    imcDietSpan.textContent = category.diet;
+
+                    resultDiv.style.display = 'block';
+                } else {
+                    alert('Por favor, ingresa todos los valores válidos para peso, altura y género.');
+                }
+            });
+
+            function getIMCCategory(imc) {
+                if (imc < 18.5) {
+                    return { status: 'Bajo peso', diet: 'Aumentar la ingesta calórica con una dieta rica en proteínas y carbohidratos.' };
+                } else if (imc >= 18.5 && imc <= 24.9) {
+                    return { status: 'Peso normal', diet: 'Mantén una dieta equilibrada con una buena cantidad de frutas y verduras.' };
+                } else if (imc >= 25 && imc <= 29.9) {
+                    return { status: 'Sobrepeso', diet: 'Reduce el consumo de grasas y azúcares, y aumenta el ejercicio.' };
+                } else {
+                    return { status: 'Obesidad', diet: 'Consulta a un nutricionista para obtener una dieta controlada y supervisión médica.' };
+                }
+            }
+        });
+    </script>
+</body>
+</html>

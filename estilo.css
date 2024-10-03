@@ -1,0 +1,97 @@
+
+    body { 
+        font-family: Arial, sans-serif; 
+        background: url('../IMC.jpg') no-repeat center center fixed;
+        background-size: cover; 
+        margin: 0;
+        position: relative;
+        height: 100vh; /* Mantener altura completa de la vista */
+        overflow-y: auto; /* Habilitar desplazamiento vertical */
+    }
+    .container { 
+        background: rgba(255, 255, 255, 0.9); 
+        padding: 30px; 
+        border-radius: 10px; 
+        box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+        max-width: 400px; 
+        width: 90%; /* Ancho responsive */
+        margin: 50px auto; /* Margen superior e inferior para espacio */
+        margin-bottom: 100px; /* Espacio adicional abajo */
+    }
+    h1 { 
+        text-align: center; 
+        margin-top: 0; /* Eliminar margen superior */
+    }
+    .info {
+        background-color: rgba(255, 255, 255, 0.9); 
+        padding: 20px; 
+        border-radius: 10px; 
+        margin: 20px 0; /* Espacio entre el bloque de información y el formulario */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
+    }
+    h2 {
+        color: black; 
+        text-align: center; 
+    }
+    p {
+        text-align: justify; 
+    }
+    label { display: block; margin-top: 10px; }
+    input[type="number"], select, button { 
+        width: 100%; 
+        padding: 10px; 
+        margin-top: 5px; 
+        border: 1px solid #ccc; 
+        border-radius: 3px; 
+    }
+    button { 
+        background: #28a745; 
+        color: #fff; 
+        border: none; 
+        cursor: pointer; 
+        margin-top: 15px;
+    }
+    button:hover { background: #218838; }
+    .result { 
+        margin-top: 20px; 
+        padding: 10px; 
+        border: 1px solid #ccc; 
+        border-radius: 3px; 
+        background: #f9f9f9; 
+        display: none;
+    }
+    .encuesta-link {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background-color: #218838;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 12px;
+    }
+    .encuesta-link:hover {
+        background-color: #218838;
+    }
+
+    /* Media queries para pantallas pequeñas */
+    @media (max-width: 768px) {
+        .container {
+            max-width: 90%; /* Ajustar el ancho */
+            padding: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            max-width: 95%; /* Hacer el contenedor más estrecho en pantallas pequeñas */
+            padding: 15px;
+        }
+
+        .encuesta-link {
+            font-size: 10px; /* Reducir el tamaño de fuente del enlace */
+            padding: 8px;    /* Reducir el padding */
+        }
+    }
+
